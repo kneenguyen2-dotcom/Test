@@ -1,172 +1,181 @@
 /* =========================
-🌿 BASE THEME
+🌿 BASE GAME BACKGROUND
 ========================= */
 body {
   margin: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: #f2efe9;
-  color: #2b2b2b;
+  font-family: system-ui, Arial, sans-serif;
+  background: #e9e6df;
+  overflow: hidden;
 }
 
 /* Dark mode */
 body.dark {
-  background: #1b1b1b;
-  color: #e6e6e6;
+  background: #1a1a1a;
+  color: #eee;
 }
 
 /* =========================
-🔐 AUTH PANEL
-========================= */
-.auth {
-  background: #ffffffcc;
-  backdrop-filter: blur(6px);
-  padding: 15px 20px;
-  border-bottom: 1px solid #ddd;
-}
-
-body.dark .auth {
-  background: #2a2a2acc;
-  border-color: #333;
-}
-
-.auth input {
-  display: block;
-  margin: 6px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  width: 220px;
-}
-
-.auth button {
-  margin-right: 5px;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
-  background: #6b8afd;
-  color: white;
-  cursor: pointer;
-}
-
-.auth button:hover {
-  background: #5577e6;
-}
-
-/* =========================
-🎮 MAIN GAME AREA
+🧪 MAIN WORKSPACE (DRAG AREA)
 ========================= */
 .game {
-  padding: 25px;
-  text-align: center;
-}
+  position: relative;
+  width: 100vw;
+  height: 100vh;
 
-/* Title */
-.game h1 {
-  font-weight: 600;
-  letter-spacing: 1px;
+  /* subtle grid like sandbox games */
+  background-image:
+    radial-gradient(#cfcac1 1px, transparent 1px);
+  background-size: 22px 22px;
+
+  overflow: hidden;
 }
 
 /* =========================
-🧪 COMBINER BOX
+🧲 DRAGGABLE ELEMENTS (CORE UI)
 ========================= */
-.combiner {
-  margin: 20px auto;
-  padding: 20px;
-  width: 280px;
+.draggable-element {
+  position: absolute;
+
+  padding: 10px 14px;
+  border-radius: 14px;
 
   background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  border: 1px solid #ddd;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+
+  cursor: grab;
+  user-select: none;
+
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.draggable-element:active {
+  cursor: grabbing;
+  transform: scale(1.08);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Dark mode elements */
+body.dark .draggable-element {
+  background: #2a2a2a;
+  border-color: #444;
+}
+
+/* =========================
+📦 UNLOCKED ELEMENT BAR (BOTTOM INVENTORY)
+========================= */
+#unlockedList {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  padding: 0;
+  margin: 0;
+
+  list-style: none;
+}
+
+/* Inventory “chips” */
+#unlockedList li {
+  padding: 8px 12px;
+  border-radius: 999px;
+
+  background: #fff;
+  border: 1px solid #ddd;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+
+  cursor: grab;
+  user-select: none;
+
+  transition: transform 0.15s ease;
+}
+
+#unlockedList li:hover {
+  transform: scale(1.08);
+}
+
+/* Dark mode chips */
+body.dark #unlockedList li {
+  background: #2b2b2b;
+  border-color: #444;
+}
+
+/* =========================
+🎯 DROP FEEDBACK EFFECT (optional highlight)
+========================= */
+.drop-zone-active {
+  outline: 2px dashed #6f85ff;
+  background: rgba(111,133,255,0.08);
+}
+
+/* =========================
+✨ SPAWN ANIMATION (new elements appear)
+========================= */
+@keyframes popIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  80% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.spawned {
+  animation: popIn 0.25s ease-out;
+}
+
+/* =========================
+🔘 FLOATING UI BUTTONS
+========================= */
+.side-buttons {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
 
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-body.dark .combiner {
-  background: #2a2a2a;
-}
-
-/* Dropdowns */
-select {
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  background: white;
-  cursor: pointer;
-}
-
-body.dark select {
-  background: #1f1f1f;
-  color: white;
-  border-color: #444;
-}
-
-/* Buttons */
-button {
-  padding: 10px;
+.side-buttons button {
   border: none;
-  border-radius: 10px;
-  background: #4a6cf7;
+  border-radius: 999px;
+
+  padding: 10px 14px;
+
+  background: #6f85ff;
   color: white;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+
   cursor: pointer;
-  transition: 0.2s;
 }
 
-button:hover {
-  transform: scale(1.03);
-  background: #3d5fe0;
-}
-
-/* Result text */
-#result {
-  margin-top: 5px;
-  font-weight: bold;
+.side-buttons button:hover {
+  background: #566ff0;
 }
 
 /* =========================
-📦 UNLOCKED ELEMENTS PANEL
-========================= */
-.panel {
-  margin-top: 30px;
-}
-
-#unlockedList {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-}
-
-/* Each element tile */
-#unlockedList li {
-  background: #ffffff;
-  padding: 8px 12px;
-  border-radius: 12px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-  font-size: 14px;
-  cursor: default;
-  transition: 0.2s;
-}
-
-#unlockedList li:hover {
-  transform: scale(1.05);
-  background: #f7f7f7;
-}
-
-body.dark #unlockedList li {
-  background: #2b2b2b;
-}
-
-/* =========================
-📚 MODALS (encyclopedia/settings)
+📚 MODALS (clean overlay UI)
 ========================= */
 .modal {
   position: fixed;
   inset: 0;
+
   background: rgba(0,0,0,0.45);
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -177,66 +186,22 @@ body.dark #unlockedList li {
 }
 
 .modal-content {
-  background: white;
-  padding: 20px;
   width: 320px;
+  padding: 16px;
+
   border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  background: white;
+
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 }
 
 body.dark .modal-content {
   background: #222;
 }
 
-/* Close button */
-.closeBtn {
-  float: right;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-/* Lists */
-#allElementsList {
-  list-style: none;
-  padding: 0;
-}
-
-#allElementsList li {
-  padding: 5px 0;
-  border-bottom: 1px solid #eee;
-}
-
-body.dark #allElementsList li {
-  border-color: #333;
-}
-
 /* =========================
-🔘 SIDE BUTTONS (floating UI like games)
+🧠 CURSOR FEEL IMPROVEMENT
 ========================= */
-.side-buttons {
-  position: fixed;
-  right: 15px;
-  bottom: 15px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.side-buttons button {
-  border-radius: 50px;
-  padding: 10px 14px;
-  font-size: 13px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-}
-
-/* =========================
-✨ SMALL POLISH (FEELING LIKE GAME UI)
-========================= */
-select, button {
-  font-family: inherit;
-}
-
-*:focus {
-  outline: none;
+* {
+  -webkit-user-drag: none;
 }
