@@ -1,102 +1,414 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Alchemy Sandbox</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mergedom: America</title>
 
-  <link rel="stylesheet" href="style.css"/>
+<!-- Supabase CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f1ec;
+  }
+
+  .container {
+    border: 6px solid #8b3a1a;
+    border-radius: 20px;
+    margin: 20px;
+    padding: 20px;
+    position: relative;
+  }
+
+  h1 {
+    text-align: center;
+    color: #8b3a1a;
+    font-size: 48px;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+  }
+
+  .layout {
+    display: flex;
+    align-items: stretch;
+  }
+
+  /* Sidebar base */
+  .sidebar {
+    width: 90px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    overflow-y: auto; /* KEY: allows unlimited elements */
+    max-height: 70vh;
+  }
+
+  .left-sidebar {
+    background-color: #e8e5df;
+  }
+
+  .right-sidebar {
+    background-color: #8b3a1a;
+    color: white;
+  }
+
+  .element {
+    font-size: 28px;
+    cursor: grab;
+    padding: 6px;
+    border-radius: 10px;
+    transition: transform 0.15s, background-color 0.15s;
+  }
+
+  .element:hover {
+    background-color: rgba(0,0,0,0.08);
+    transform: scale(1.1);
+  }
+
+  /* Main Area */
+  .main-area {
+    flex: 1;
+    background-color: #e8e5df;
+    margin: 0 20px;
+    border-radius: 15px;
+    position: relative;
+    padding: 20px;
+  }
+
+  /* Drop zone */
+  .workspace {
+    border: 2px dashed #bbb;
+    border-radius: 15px;
+    height: 60vh;
+    position: relative;
+  }
+
+  .floating {
+    position: absolute;
+    font-size: 32px;
+    cursor: grab;
+  }
+
+  /* POPUP MODAL */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+
+  .modal-content {
+    background-color: #c9883d;
+    padding: 20px 30px;
+    border-radius: 15px;
+    text-align: center;
+    min-width: 280px;
+    animation: pop 0.2s ease-out;
+  }
+
+  @keyframes pop {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .formula {
+    font-size: 22px;
+    margin: 10px 0;
+  }
+
+  .close-btn {
+    margin-top: 12px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+</style>
 </head>
-
 <body>
 
-  <!-- =========================
-  🔐 AUTH / TOP BAR
-  ========================= -->
-  <header class="auth">
-    <input id="email" type="email" placeholder="Email" />
-    <input id="password" type="password" placeholder="Password" />
+<div class="container">
+  <h1>MERGEDOM: AMERICA</h1>
 
-    <button id="signupBtn">Sign Up</button>
-    <button id="loginBtn">Login</button>
-    <button id="logoutBtn">Logout</button>
+  <div class="layout">
 
-    <span id="authStatus">Not logged in</span>
-  </header>
+    <!-- LEFT ELEMENT LIBRARY -->
+    <div class="sidebar left-sidebar" id="leftSidebar"></div>
 
-  <!-- =========================
-  🎮 MAIN SANDBOX WORKSPACE
-  ========================= -->
-  <main class="game">
-
-    <!-- =========================
-    🧪 DRAGGABLE ELEMENTS AREA (spawn here)
-    ========================= -->
-    <div id="workspace">
-
-      <!-- Example elements (JS will generate these later) -->
-      <div class="draggable-element" data-id="1" style="left:100px; top:120px;">
-        🔥 Fire
-      </div>
-
-      <div class="draggable-element" data-id="2" style="left:220px; top:160px;">
-        💧 Water
-      </div>
-
-      <div class="draggable-element" data-id="3" style="left:340px; top:200px;">
-        🌍 Earth
-      </div>
-
+    <!-- MAIN WORKSPACE -->
+    <div class="main-area">
+      <div class="workspace" id="workspace"></div>
     </div>
 
-    <!-- =========================
-    📦 INVENTORY BAR (UNLOCKED ELEMENTS)
-    ========================= -->
-    <ul id="unlockedList"></ul>
+    <!-- DISCOVERED ELEMENTS -->
+    <div class="sidebar right-sidebar" id="rightSidebar"></div>
 
-    <!-- =========================
-    🔘 FLOATING SIDE MENU
-    ========================= -->
-    <div class="side-buttons">
-      <button id="settingsBtn">⚙️</button>
-      <button id="encyclopediaBtn">📚</button>
-      <button id="resetBtn">🔄</button>
-    </div>
-
-    <!-- =========================
-    🧪 RESULT FEEDBACK (OPTIONAL HUD)
-    ========================= -->
-    <div id="result"></div>
-
-  </main>
-
-  <!-- =========================
-  📚 ENCYCLOPEDIA MODAL
-  ========================= -->
-  <div id="encyclopediaModal" class="modal hidden">
-    <div class="modal-content">
-      <button class="closeBtn">✖</button>
-      <h2>Elements</h2>
-      <ul id="allElementsList"></ul>
-    </div>
   </div>
+</div>
 
-  <!-- =========================
-  ⚙️ SETTINGS MODAL
-  ========================= -->
-  <div id="settingsModal" class="modal hidden">
-    <div class="modal-content">
-      <button class="closeBtn">✖</button>
-      <h2>Settings</h2>
-
-      <button id="themeToggle">Toggle Theme</button>
-    </div>
+<!-- POPUP -->
+<div class="modal" id="resultModal">
+  <div class="modal-content">
+    <div><strong>You created:</strong></div>
+    <div class="formula" id="formulaText"></div>
+    <div id="descriptionText"></div>
+    <button class="close-btn" onclick="closeModal()">OK</button>
   </div>
+</div>
 
-  <!-- =========================
-  🧠 JS FILE
-  ========================= -->
-  <script type="module" src="main.js"></script>
+<script>
+
+/* =============================
+   SUPABASE CONFIG
+   ============================= */
+
+const SUPABASE_URL = "YOUR_URL";
+const SUPABASE_KEY = "YOUR_KEY";
+
+const supabaseClient = supabase.createClient(
+  "https://qnceucksnoskacjntvgr.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFuY2V1Y2tzbm9za2Fjam50dmdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0OTY2NzYsImV4cCI6MjA5MTA3MjY3Nn0.aPFMGlUEq4apUKvs_dMPShHN8WXS0gSd0UfPdAcXOPs"
+);
+
+/* =============================
+   ELEMENT DATA (can be many)
+   ============================= */
+
+/* =============================
+   LOAD ELEMENTS FROM SUPABASE
+   Table: elements
+
+   id (text)
+   name (text)
+   icon (text)
+
+   ============================= */
+
+let elements = [];
+
+async function loadElements() {
+  const { data, error } = await supabaseClient
+    .from("elements")
+    .select("id, element_name, category, description")
+    .order("name", { ascending: true });
+
+  if (error) {
+    console.error("Error loading elements:", error);
+    return;
+  }
+
+  elements = data.map(el => ({
+    id: el.id,
+    element_name: el.element_name,
+    category: el.category,
+    description: el.description
+  }));
+
+  renderSidebar(elements, document.getElementById("leftSidebar"));
+}
+
+loadElements();
+
+const discovered = new Set();
+
+/* =============================
+   RENDER SIDEBARS
+   ============================= */
+
+function renderSidebar(list, container) {
+  container.innerHTML = "";
+
+  list.forEach(el => {
+    const div = document.createElement("div");
+    div.className = "element";
+    // Display first letter of element name (can be replaced with images later)
+    div.textContent = el.element_name.charAt(0).toUpperCase();
+    div.draggable = true;
+    div.dataset.id = el.id;
+
+    div.addEventListener("dragstart", dragStart);
+
+    container.appendChild(div);
+  });
+}
+
+renderSidebar(elements, document.getElementById("leftSidebar"));
+
+/* =============================
+   DRAG & DROP
+   ============================= */
+
+let draggedId = null;
+
+function dragStart(e) {
+  draggedId = e.target.dataset.id;
+}
+
+const workspace = document.getElementById("workspace");
+
+workspace.addEventListener("dragover", e => {
+  e.preventDefault();
+});
+
+workspace.addEventListener("drop", async e => {
+  e.preventDefault();
+
+  if (!draggedId) return;
+
+  const icon = elements.find(el => el.id === draggedId).icon;
+
+  const div = document.createElement("div");
+  div.className = "floating";
+  div.textContent = icon;
+
+  div.style.left = e.offsetX + "px";
+  div.style.top = e.offsetY + "px";
+
+  div.dataset.id = draggedId;
+
+  workspace.appendChild(div);
+
+  checkNearbyCombinations();
+});
+
+/* =============================
+   COMBINATION CHECK
+   ============================= */
+
+async function checkNearbyCombinations() {
+  const items = [...workspace.children];
+
+  if (items.length < 2) return;
+
+  const last = items[items.length - 1];
+
+  for (let i = 0; i < items.length - 1; i++) {
+    const other = items[i];
+
+    const rect1 = last.getBoundingClientRect();
+    const rect2 = other.getBoundingClientRect();
+
+    const distance = Math.hypot(
+      rect1.x - rect2.x,
+      rect1.y - rect2.y
+    );
+
+    if (distance < 80) {
+      await tryCombination(
+        last.dataset.id,
+        other.dataset.id
+      );
+    }
+  }
+}
+
+/* =============================
+   SUPABASE LOOKUP
+   Table relationships example:
+
+   elements table
+   -----------------------
+   id | name | icon
+
+   combinations table
+   -----------------------
+   id | element1_id | element2_id | result_element_id | description
+
+   IMPORTANT: element1_id, element2_id, and result_element_id should match ids in the elements table.
+
+   ============================= */
+
+async function tryCombination(a, b) {
+  const { data, error } = await supabaseClient
+    .from("combinations")
+    .select("*")
+    .or(`and(element1.eq.${a},element2.eq.${b}),and(element1.eq.${b},element2.eq.${a})`)
+    .limit(1);
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  if (data.length === 0) return;
+
+  const combo = data[0];
+
+  // Fetch the result element details
+  const { data: resultElement } = await supabaseClient
+    .from("elements")
+    .select("id, element_name, category, description")
+    .eq("id", combo.result_element_id)
+    .single();
+
+  if (!resultElement) return;
+
+  if (!discovered.has(resultElement.id)) {
+    discovered.add(resultElement.id);
+
+    const discoveredElements = [];
+
+    for (const id of discovered) {
+      const { data } = await supabaseClient
+        .from("elements")
+        .select("id, element_name, category, description")
+        .eq("id", id)
+        .single();
+
+      if (data) if (data) {
+        discoveredElements.push({
+          id: data.id,
+          element_name: data.element_name,
+          category: data.category,
+          description: data.description
+        });
+      }
+    }
+
+    renderSidebar(
+      discoveredElements,
+      document.getElementById("rightSidebar")
+    );
+  })),
+      document.getElementById("rightSidebar")
+    );
+  }
+
+  showModal(combo);
+}
+
+/* =============================
+   POPUP
+   ============================= */
+
+function showModal(combo) {
+  document.getElementById("formulaText").textContent =
+    `${combo.element1_id} + ${combo.element2_id} = ${combo.result_element_id}`;
+
+  document.getElementById("descriptionText").textContent =
+    combo.description;
+
+  document.getElementById("resultModal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("resultModal").style.display = "none";
+}
+
+</script>
 
 </body>
 </html>
