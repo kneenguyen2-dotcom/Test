@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alchemy Game</title>
+
+  <link rel="stylesheet" href="style.css"/>
+</head>
+
+<body>
+
+  <!-- =========================
+  🔐 AUTH SECTION
+  ========================= -->
+  <section class="auth">
+    <h2>Login</h2>
+
+    <input id="email" type="email" placeholder="Email" />
+    <input id="password" type="password" placeholder="Password" />
+
+    <button id="signupBtn">Sign Up</button>
+    <button id="loginBtn">Login</button>
+    <button id="logoutBtn">Logout</button>
+
+    <p id="authStatus">Not logged in</p>
+  </section>
+
+  <!-- =========================
+  🎮 GAME SECTION
+  ========================= -->
+  <main class="game">
+
+    <h1>Alchemy Game</h1>
+
+    <div class="combiner">
+
+      <select id="element1"></select>
+      <select id="element2"></select>
+
+      <button id="combineBtn">Combine</button>
+      <button id="clearBtn">Clear</button>
+      <button id="hintBtn">Hint</button>
+
+      <p id="result"></p>
+    </div>
+
+    <!-- UNLOCKED -->
+    <section class="panel">
+      <h3>Unlocked Elements</h3>
+      <ul id="unlockedList"></ul>
+    </section>
+
+  </main>
+
+  <!-- =========================
+  📚 ENCYCLOPEDIA MODAL
+  ========================= -->
+  <div id="encyclopediaModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="closeBtn">X</button>
+      <h2>All Elements</h2>
+      <ul id="allElementsList"></ul>
+    </div>
+  </div>
+
+  <!-- =========================
+  ⚙️ SETTINGS MODAL
+  ========================= -->
+  <div id="settingsModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="closeBtn">X</button>
+      <h2>Settings</h2>
+      <button id="themeToggle">Toggle Theme</button>
+      <button id="resetBtn">Reset Progress</button>
+    </div>
+  </div>
+
+  <!-- =========================
+  🔘 SIDE BUTTONS
+  ========================= -->
+  <div class="side-buttons">
+    <button id="settingsBtn">Settings</button>
+    <button id="encyclopediaBtn">Encyclopedia</button>
+  </div>
+
+  <!-- YOUR JS -->
+  <script type="module" src="main.js"></script>
+
+</body>
+</html>
