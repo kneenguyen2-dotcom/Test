@@ -1,65 +1,131 @@
 /* =========================
-🌐 BASE
+🌿 BASE THEME
 ========================= */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
-  color: #222;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f2efe9;
+  color: #2b2b2b;
 }
 
-/* DARK MODE */
+/* Dark mode */
 body.dark {
-  background: #111;
-  color: #eee;
+  background: #1b1b1b;
+  color: #e6e6e6;
 }
 
 /* =========================
-🔐 AUTH
+🔐 AUTH PANEL
 ========================= */
 .auth {
-  padding: 20px;
-  background: #fff;
+  background: #ffffffcc;
+  backdrop-filter: blur(6px);
+  padding: 15px 20px;
   border-bottom: 1px solid #ddd;
 }
 
 body.dark .auth {
-  background: #1c1c1c;
+  background: #2a2a2acc;
+  border-color: #333;
 }
 
 .auth input {
   display: block;
-  margin: 5px 0;
-  padding: 8px;
+  margin: 6px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 220px;
+}
+
+.auth button {
+  margin-right: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #6b8afd;
+  color: white;
+  cursor: pointer;
+}
+
+.auth button:hover {
+  background: #5577e6;
 }
 
 /* =========================
-🎮 GAME AREA
+🎮 MAIN GAME AREA
 ========================= */
 .game {
-  padding: 20px;
+  padding: 25px;
+  text-align: center;
 }
 
+/* Title */
+.game h1 {
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* =========================
+🧪 COMBINER BOX
+========================= */
 .combiner {
+  margin: 20px auto;
+  padding: 20px;
+  width: 280px;
+
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 300px;
 }
 
-select, button {
+body.dark .combiner {
+  background: #2a2a2a;
+}
+
+/* Dropdowns */
+select {
   padding: 10px;
-  font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
 }
 
-/* RESULT */
+body.dark select {
+  background: #1f1f1f;
+  color: white;
+  border-color: #444;
+}
+
+/* Buttons */
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #4a6cf7;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.03);
+  background: #3d5fe0;
+}
+
+/* Result text */
 #result {
-  margin-top: 10px;
+  margin-top: 5px;
   font-weight: bold;
 }
 
 /* =========================
-📦 UNLOCKED PANEL
+📦 UNLOCKED ELEMENTS PANEL
 ========================= */
 .panel {
   margin-top: 30px;
@@ -68,23 +134,39 @@ select, button {
 #unlockedList {
   list-style: none;
   padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
 }
 
+/* Each element tile */
 #unlockedList li {
-  padding: 4px 0;
+  background: #ffffff;
+  padding: 8px 12px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  font-size: 14px;
+  cursor: default;
+  transition: 0.2s;
+}
+
+#unlockedList li:hover {
+  transform: scale(1.05);
+  background: #f7f7f7;
+}
+
+body.dark #unlockedList li {
+  background: #2b2b2b;
 }
 
 /* =========================
-📚 MODALS
+📚 MODALS (encyclopedia/settings)
 ========================= */
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-
+  inset: 0;
+  background: rgba(0,0,0,0.45);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,33 +179,64 @@ select, button {
 .modal-content {
   background: white;
   padding: 20px;
-  width: 300px;
-  border-radius: 8px;
+  width: 320px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
 body.dark .modal-content {
   background: #222;
-  color: white;
 }
 
-/* CLOSE BUTTON */
+/* Close button */
 .closeBtn {
   float: right;
   cursor: pointer;
+  font-size: 16px;
+}
+
+/* Lists */
+#allElementsList {
+  list-style: none;
+  padding: 0;
+}
+
+#allElementsList li {
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+body.dark #allElementsList li {
+  border-color: #333;
 }
 
 /* =========================
-🔘 SIDE BUTTONS
+🔘 SIDE BUTTONS (floating UI like games)
 ========================= */
 .side-buttons {
   position: fixed;
-  right: 10px;
-  bottom: 10px;
+  right: 15px;
+  bottom: 15px;
+
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
 .side-buttons button {
-  padding: 10px;
+  border-radius: 50px;
+  padding: 10px 14px;
+  font-size: 13px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* =========================
+✨ SMALL POLISH (FEELING LIKE GAME UI)
+========================= */
+select, button {
+  font-family: inherit;
+}
+
+*:focus {
+  outline: none;
 }
