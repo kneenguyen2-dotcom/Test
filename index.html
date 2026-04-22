@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alchemy Sandbox</title>
+
+  <link rel="stylesheet" href="style.css"/>
+</head>
+
+<body>
+
+  <!-- =========================
+  🔐 AUTH / TOP BAR
+  ========================= -->
+  <header class="auth">
+    <input id="email" type="email" placeholder="Email" />
+    <input id="password" type="password" placeholder="Password" />
+
+    <button id="signupBtn">Sign Up</button>
+    <button id="loginBtn">Login</button>
+    <button id="logoutBtn">Logout</button>
+
+    <span id="authStatus">Not logged in</span>
+  </header>
+
+  <!-- =========================
+  🎮 MAIN SANDBOX WORKSPACE
+  ========================= -->
+  <main class="game">
+
+    <!-- =========================
+    🧪 DRAGGABLE ELEMENTS AREA (spawn here)
+    ========================= -->
+    <div id="workspace">
+
+      <!-- Example elements (JS will generate these later) -->
+      <div class="draggable-element" data-id="1" style="left:100px; top:120px;">
+        🔥 Fire
+      </div>
+
+      <div class="draggable-element" data-id="2" style="left:220px; top:160px;">
+        💧 Water
+      </div>
+
+      <div class="draggable-element" data-id="3" style="left:340px; top:200px;">
+        🌍 Earth
+      </div>
+
+    </div>
+
+    <!-- =========================
+    📦 INVENTORY BAR (UNLOCKED ELEMENTS)
+    ========================= -->
+    <ul id="unlockedList"></ul>
+
+    <!-- =========================
+    🔘 FLOATING SIDE MENU
+    ========================= -->
+    <div class="side-buttons">
+      <button id="settingsBtn">⚙️</button>
+      <button id="encyclopediaBtn">📚</button>
+      <button id="resetBtn">🔄</button>
+    </div>
+
+    <!-- =========================
+    🧪 RESULT FEEDBACK (OPTIONAL HUD)
+    ========================= -->
+    <div id="result"></div>
+
+  </main>
+
+  <!-- =========================
+  📚 ENCYCLOPEDIA MODAL
+  ========================= -->
+  <div id="encyclopediaModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="closeBtn">✖</button>
+      <h2>Elements</h2>
+      <ul id="allElementsList"></ul>
+    </div>
+  </div>
+
+  <!-- =========================
+  ⚙️ SETTINGS MODAL
+  ========================= -->
+  <div id="settingsModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="closeBtn">✖</button>
+      <h2>Settings</h2>
+
+      <button id="themeToggle">Toggle Theme</button>
+    </div>
+  </div>
+
+  <!-- =========================
+  🧠 JS FILE
+  ========================= -->
+  <script type="module" src="main.js"></script>
+
+</body>
+</html>
