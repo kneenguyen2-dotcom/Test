@@ -1,5 +1,5 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-
+console.log("Main.js loaded");
 // =========================
 // 🔌 SUPABASE
 // =========================
@@ -127,9 +127,17 @@ function setupAuth() {
 // 🎮 GAME LOGIC
 // =========================
 function setupGame() {
-  $("combineBtn").addEventListener("click", combineElements);
-  $("clearBtn").addEventListener("click", clearSelection);
-  $("hintBtn").addEventListener("click", showHint);
+  console.log("setupGame running");
+
+  const combineBtn = document.getElementById("combineBtn");
+  const clearBtn = document.getElementById("clearBtn");
+  const hintBtn = document.getElementById("hintBtn");
+
+  console.log({ combineBtn, clearBtn, hintBtn });
+
+  combineBtn?.addEventListener("click", combineElements);
+  clearBtn?.addEventListener("click", clearSelection);
+  hintBtn?.addEventListener("click", showHint);
 }
 
 function combineElements() {
