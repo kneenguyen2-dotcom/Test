@@ -1,0 +1,129 @@
+/* =========================
+🌐 BASE
+========================= */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  color: #222;
+}
+
+/* DARK MODE */
+body.dark {
+  background: #111;
+  color: #eee;
+}
+
+/* =========================
+🔐 AUTH
+========================= */
+.auth {
+  padding: 20px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+body.dark .auth {
+  background: #1c1c1c;
+}
+
+.auth input {
+  display: block;
+  margin: 5px 0;
+  padding: 8px;
+}
+
+/* =========================
+🎮 GAME AREA
+========================= */
+.game {
+  padding: 20px;
+}
+
+.combiner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px;
+}
+
+select, button {
+  padding: 10px;
+  font-size: 14px;
+}
+
+/* RESULT */
+#result {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* =========================
+📦 UNLOCKED PANEL
+========================= */
+.panel {
+  margin-top: 30px;
+}
+
+#unlockedList {
+  list-style: none;
+  padding: 0;
+}
+
+#unlockedList li {
+  padding: 4px 0;
+}
+
+/* =========================
+📚 MODALS
+========================= */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  width: 300px;
+  border-radius: 8px;
+}
+
+body.dark .modal-content {
+  background: #222;
+  color: white;
+}
+
+/* CLOSE BUTTON */
+.closeBtn {
+  float: right;
+  cursor: pointer;
+}
+
+/* =========================
+🔘 SIDE BUTTONS
+========================= */
+.side-buttons {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.side-buttons button {
+  padding: 10px;
+}
