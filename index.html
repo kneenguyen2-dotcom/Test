@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mergedom: America</title>
+
+</head>
+<body>
+
+<!-- Top banner -->
+<div id="topBanner">
+  Mergedom: America
+</div>
+
+<!-- Menu buttons -->
+<div id="menuButtons">
+  <div class="menuTile" onclick="openModal('accountModal')">Account</div>
+  <div class="menuTile" onclick="openModal('encyclopediaModal')">Encyclopedia</div>
+  <div style="flex: 1;"></div>
+  <div class="menuTile" onclick="openModal('settingsModal')">Settings</div>
+  <div id="eraseTile" class="menuTile" onclick="clearWorkspace()">Erase</div>
+
+<!-- Main layout -->
+</div>
+<div id="mainContainer">
+  <div id="workspace"></div>
+  <div id="sidePanel">
+    <h3>Elements</h3>
+    <div id="elementsContainer"></div>
+  </div>
+</div>
+
+<!-- Settings modal -->
+<div id="settingsModal" class="modal" onclick="closeModal(event,'settingsModal')">
+  <div class="modalContent settingsPanel">
+    <h2>Settings</h2>
+
+    <!-- Volume -->
+    <div class="settingItem">
+      <label>Music Volume</label>
+      <input type="range" min="0" max="100" value="50" id="volumeSlider">
+    </div>
+
+    <!-- Theme -->
+    <div class="settingItem">
+      <label>Theme</label>
+      <button onclick="toggleTheme()" class="settingsButton">
+        Toggle Dark / Light Mode
+      </button>
+    </div>
+
+     <!-- Reset -->
+    <div class="settingItem">
+      <label>Progress</label>
+      <button onclick="resetProgress()" class="settingsButton danger">
+        Reset Progress
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Encyclopedia modal -->
+<div id="encyclopediaModal" class="modal" onclick="closeModal(event,'encyclopediaModal')">
+  <div class="modalContent" style="flex-direction: column; align-items: stretch;">
+    <h2>📖 Encyclopedia</h2>
+    <div id="encyclopediaList" style="overflow-y:auto; height: 100%; width: 100%;"></div>
+  </div>
+</div>
+
+<!-- Account modal -->
+<div id="accountModal" class="modal" onclick="closeModal(event,'accountModal')">
+  <div class="modalContent accountPanel">
+    <h2>Account</h2>
+    <!-- Status -->
+    <div id="accountStatus">Not logged in</div>
+    <!-- Inputs -->
+    <input type="text" id="usernameInput" placeholder="Enter username">
+    <input type="password" id="passwordInput" placeholder="Enter password">
+
+    <!-- Actions -->
+    <div class="accountButtons">
+      <button onclick="signup()">Sign Up</button>
+      <button onclick="login()">Log In</button>
+      <button onclick="logout()">Log Out</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
